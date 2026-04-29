@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Day 6: Interactive Portfolio</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: Arial, sans-serif;
+            background: #f0f2f5;
+            padding: 20px;
+        }
+        
+        h1 {
+            text-align: center;
+            color: #2c3e50;
+            margin-bottom: 10px;
+        }
+        
+        p {
+            text-align: center;
+            color: #7f8c8d;
+            margin-bottom: 30px;
+        }
+        
+        .container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        .card {
+            background: #3498db;
+            color: white;
+            padding: 30px;
+            border-radius: 10px;
+            flex: 1 1 250px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s ease; /* NEW: Smooth animation */
+        }
+        
+        .card:hover {
+            transform: translateY(-10px); /* NEW: Lift on hover */
+            background: #2980b9;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.2);
+        }
+        
+        .card h2 {
+            margin-bottom: 10px;
+        }
+        
+        @media (max-width: 600px) {
+            .container {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+<body>
+    <h1>Hi! I'm Sylvie from Kigali</h1>
+    <p>Click a card to view that day's project</p>
+    
+    <div class="container">
+        <div class="card" onclick="openDay(2)">
+            <h2>Day 2</h2>
+            <p>HTML Basics</p>
+        </div>
+        
+        <div class="card" onclick="openDay(3)">
+            <h2>Day 3</h2>
+            <p>CSS Styling</p>
+        </div>
+        
+        <div class="card" onclick="openDay(4)">
+            <h2>Day 4</h2>
+            <p>Git & GitHub</p>
+        </div>
+        
+        <div class="card" onclick="openDay(5)">
+            <h2>Day 5</h2>
+            <p>Responsive Design</p>
+        </div>
+    </div>
+
+    <!-- NEW: JavaScript starts here -->
+    <script>
+        function openDay(dayNumber) {
+            alert('Opening Day ' + dayNumber + '!');
+            window.location.href = 'day' + dayNumber + '.html';
+        }
+    </script>
+</body>
+</html>
