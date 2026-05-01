@@ -1,0 +1,373 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Day 8: Pro Portfolio | Sylvie</title>
+    <style>
+        :root {
+            --bg: #f0f2f5;
+            --card-bg: #3498db;
+            --text: #2c3e50;
+            --text-light: #555;
+            --shadow: rgba(0,0,0,0.1);
+        }
+        
+        body.dark {
+            --bg: #1a1a1a;
+            --card-bg: #2980b9;
+            --text: #ecf0f1;
+            --text-light: #bdc3c7;
+            --shadow: rgba(255,255,255,0.05);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            transition: background 0.3s, color 0.3s;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            padding: 40px 20px;
+            text-align: center;
+            opacity: 0;
+            animation: fadeIn 0.8s ease-out forwards;
+        }
+
+        @keyframes fadeIn {
+            to { opacity: 1; }
+        }
+
+        .top-bar {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            z-index: 100;
+        }
+
+        #themeBtn {
+            background: var(--card-bg);
+            color: white;
+            border: none;
+            padding: 10px 15px;
+            border-radius: 50px;
+            cursor: pointer;
+            font-size: 18px;
+            box-shadow: 0 4px 10px var(--shadow);
+        }
+
+        #themeBtn:hover {
+            transform: scale(1.1);
+        }
+
+        h1 { 
+            color: var(--text); 
+            margin-bottom: 10px;
+            margin-top: 40px;
+        }
+        
+        .subtitle { 
+            color: var(--text-light); 
+            margin-bottom: 30px; 
+        }
+
+        .cards {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+            justify-content: center;
+            margin: 30px 0;
+        }
+
+        .card {
+            background: var(--card-bg);
+            color: white;
+            padding: 30px;
+            border-radius: 10px;
+            width: 200px;
+            flex: 0 0 200px;
+            text-align: center;
+            cursor: pointer;
+            transform: translateY(20px);
+            opacity: 0;
+            animation: slideUp 0.6s ease-out forwards;
+            box-shadow: 0 5px 15px var(--shadow);
+        }
+
+        .card:nth-child(1) { animation-delay: 0.1s; }
+        .card:nth-child(2) { animation-delay: 0.2s; }
+        .card:nth-child(3) { animation-delay: 0.3s; }
+        .card:nth-child(4) { animation-delay: 0.4s; }
+        .card:nth-child(5) { animation-delay: 0.5s; }
+
+        @keyframes slideUp {
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+
+        .card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 8px 25px var(--shadow);
+        }
+
+        .card h2 { margin: 0 0 10px 0; }
+        .card p { margin: 5px 0; opacity: 0.9; }
+        .count { font-size: 14px; opacity: 0.8; }
+        .updated { font-size: 12px; opacity: 0.7; margin-top: 8px; }
+
+        /* Contact Form */
+        .contact {
+            max-width: 500px;
+            margin: 60px auto 20px;
+            background: var(--card-bg);
+            padding: 30px;
+            border-radius: 10px;
+            color: white;
+            box-shadow: 0 5px 15px var(--shadow);
+            transform: translateY(20px);
+            opacity: 0;
+            animation: slideUp 0.6s ease-out 0.6s forwards;
+        }
+
+        .contact h2 { margin-bottom: 20px; }
+        
+        .form-group {
+            margin-bottom: 15px;
+            text-align: left;
+        }
+
+        .contact input, .contact textarea {
+            width: 100%;
+            padding: 12px;
+            border: none;
+            border-radius: 5px;
+            font-size: 16px;
+            margin-top: 5px;
+        }
+
+        .contact button {
+            background: white;
+            color: var(--card-bg);
+            border: none;
+            padding: 12px 30px;
+            border-radius: 5px;
+            font-weight: bold;
+            cursor: pointer;
+            margin-top: 10px;
+        }
+
+        .contact button:hover {
+            transform: scale(1.05);
+        }
+
+        .error {
+            color: #ffcccc;
+            font-size: 14px;
+            margin-top: 5px;
+            display: none;
+        }
+
+        .success {
+            color: #ccffcc;
+            font-size: 14px;
+            margin-top: 10px;
+            display: none;
+        }
+
+        footer {
+            margin-top: 40px;
+            color: var(--text-light);
+            font-size: 14px;
+        }
+    </style>
+</head>
+<body>
+    <div class="top-bar">
+        <button id="themeBtn">🌙</button>
+    </div>
+
+    <h1>Hi! I'm Sylvie from Kigali</h1>
+    <p class="subtitle">Day 8: Pro Portfolio — Click a card to view that day's project</p>
+
+    <div class="cards">
+        <div class="card" onclick="openDay(1)">
+            <h2>Day 1</h2>
+            <p>HTML Basics</p>
+            <p class="count"><span id="count-1">Clicked 0 times</span></p>
+            <p class="updated" id="updated-1">Loading...</p>
+        </div>
+        <div class="card" onclick="openDay(2)">
+            <h2>Day 2</h2>
+            <p>CSS Styling</p>
+            <p class="count"><span id="count-2">Clicked 0 times</span></p>
+            <p class="updated" id="updated-2">Loading...</p>
+        </div>
+        <div class="card" onclick="openDay(3)">
+            <h2>Day 3</h2>
+            <p>Layouts</p>
+            <p class="count"><span id="count-3">Clicked 0 times</span></p>
+            <p class="updated" id="updated-3">Loading...</p>
+        </div>
+        <div class="card" onclick="openDay(4)">
+            <h2>Day 4</h2>
+            <p>Forms</p>
+            <p class="count"><span id="count-4">Clicked 0 times</span></p>
+            <p class="updated" id="updated-4">Loading...</p>
+        </div>
+        <div class="card" onclick="openDay(5)">
+            <h2>Day 5</h2>
+            <p>Responsive</p>
+            <p class="count"><span id="count-5">Clicked 0 times</span></p>
+            <p class="updated" id="updated-5">Loading...</p>
+        </div>
+    </div>
+
+    <div class="contact">
+        <h2>Contact Me</h2>
+        <form id="contactForm">
+            <div class="form-group">
+                <input type="text" id="name" placeholder="Your Name" required>
+                <div class="error" id="nameError">Please enter your name</div>
+            </div>
+            <div class="form-group">
+                <input type="email" id="email" placeholder="Your Email" required>
+                <div class="error" id="emailError">Please enter a valid email</div>
+            </div>
+            <div class="form-group">
+                <textarea id="message" placeholder="Your Message" rows="4" required></textarea>
+                <div class="error" id="msgError">Message must be at least 10 characters</div>
+            </div>
+            <button type="submit">Send Message</button>
+            <div class="success" id="successMsg">Message sent! I'll reply soon 💙</div>
+        </form>
+    </div>
+
+    <footer>
+        <p>Built by Sylvie in Kigali | Day 8 of 30</p>
+    </footer>
+
+    <script>
+        // 1. DARK MODE TOGGLE
+        const themeBtn = document.getElementById('themeBtn');
+        const body = document.body;
+        
+        // Load saved theme
+        if (localStorage.getItem('theme') === 'dark') {
+            body.classList.add('dark');
+            themeBtn.innerText = '☀️';
+        }
+
+        themeBtn.addEventListener('click', () => {
+            body.classList.toggle('dark');
+            if (body.classList.contains('dark')) {
+                localStorage.setItem('theme', 'dark');
+                themeBtn.innerText = '☀️';
+            } else {
+                localStorage.setItem('theme', 'light');
+                themeBtn.innerText = '🌙';
+            }
+        });
+
+        // 2. CLICK COUNTER - Load saved counts
+        for (let i = 1; i <= 5; i++) {
+            let savedCount = localStorage.getItem('day' + i) || 0;
+            document.getElementById('count-' + i).innerText = 'Clicked ' + savedCount + ' times';
+        }
+
+        function openDay(dayNumber) {
+            let count = localStorage.getItem('day' + dayNumber) || 0;
+            count++;
+            localStorage.setItem('day' + dayNumber, count);
+            document.getElementById('count-' + dayNumber).innerText = 'Clicked ' + count + ' times';
+            
+            alert('Opening Day ' + dayNumber + '! Total clicks: ' + count);
+            
+            setTimeout(function() {
+                window.location.href = 'day' + dayNumber + '.html';
+            }, 100);
+        }
+
+        // 3. LIVE GITHUB STATS - Fetch last commit date
+        async function loadGitHubStats() {
+            const username = 'ingabirelvie';
+            const repo = 'Sylvie-INGABIRE';
+            
+            for (let i = 1; i <= 5; i++) {
+                try {
+                    const res = await fetch(https://api.github.com/repos/${username}/${repo}/commits?path=day${i}.html&page=1&per_page=1);
+                    const data = await res.json();
+                    if (data[0]) {
+                        const date = new Date(data[0].commit.committer.date);
+                        const diff = Math.floor((new Date() - date) / (1000 * 60 * 60));
+                        const text = diff < 24 ? Updated ${diff}h ago : Updated ${Math.floor(diff/24)}d ago;
+                        document.getElementById('updated-' + i).innerText = text;
+                    } else {
+                        document.getElementById('updated-' + i).innerText = 'No commits yet';
+                    }
+                } catch (e) {
+                    document.getElementById('updated-' + i).innerText = 'Stats unavailable';
+                }
+            }
+        }
+        loadGitHubStats();
+
+        // 4. CONTACT FORM VALIDATION
+        const form = document.getElementById('contactForm');
+        const nameInput = document.getElementById('name');
+        const emailInput = document.getElementById('email');
+        const msgInput = document.getElementById('message');
+        const nameError = document.getElementById('nameError');
+        const emailError = document.getElementById('emailError');
+        const msgError = document.getElementById('msgError');
+        const successMsg = document.getElementById('successMsg');
+
+        form.addEventListener('submit', function(e) {
+            e.preventDefault();
+            let valid = true;
+
+            // Name check
+            if (nameInput.value.trim() === '') {
+                nameError.style.display = 'block';
+                valid = false;
+            } else {
+                nameError.style.display = 'none';
+            }
+
+            // Email check with regex
+            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            if (!emailRegex.test(emailInput.value)) {
+                emailError.style.display = 'block';
+                valid = false;
+            } else {
+                emailError.style.display = 'none';
+            }
+
+            // Message check
+            if (msgInput.value.trim().length < 10) {
+                msgError.style.display = 'block';
+                valid = false;
+            } else {
+                msgError.style.display = 'none';
+            }
+
+            if (valid) {
+                successMsg.style.display = 'block';
+                form.reset();
+                setTimeout(() => {
+                    successMsg.style.display = 'none';
+                }, 3000);
+            }
+        });
+    </script>
+</body>
+</html>
