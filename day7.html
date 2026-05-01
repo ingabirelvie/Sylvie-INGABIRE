@@ -99,11 +99,26 @@
 </div>
 
     <!-- NEW: JavaScript starts here -->
-    <script>
-        function openDay(dayNumber) {
-            alert('Opening Day ' + dayNumber + '!');
-            window.location.href = 'day' + dayNumber + '.html';
-        }
-    </script>
+   <script>
+    // Load saved counts when page opens
+    for (let i = 1; i <= 5; i++) {
+        let savedCount = localStorage.getItem('day' + i) || 0;
+        document.getElementById('count-' + i).innerText = 'Clicked ' + savedCount + ' times';
+    }
+
+    function openDay(dayNumber) {
+        // Get current count, add 1, save it
+        let count = localStorage.getItem('day' + dayNumber) || 0;
+        count++;
+        localStorage.setItem('day' + dayNumber, count);
+        
+        // Update text on page
+        document.getElementById('count-' + dayNumber).innerText = 'Clicked ' + count + ' times';
+        
+        // Your original code
+        alert('Opening Day ' + dayNumber + '!');
+        window.location.href = 'day' + dayNumber + '.html';
+    }
+</script>
 </body>
 </html>
