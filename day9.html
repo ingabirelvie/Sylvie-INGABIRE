@@ -310,61 +310,44 @@ function loadGitHubStats() {
 }
 loadGitHubStats();
         // 5. CONTACT FORM
-        try {
-            const form = document.getElementById('contactForm');
-            const nameInput = document.getElementById('name');
-            const emailInput = document.getElementById('email');
-            const msgInput = document.getElementById('message');
-            const nameError = document.getElementById('nameError');
-            const emailError = document.getElementById('emailError');
-            const msgError = document.getElementById('msgError');
-            const successMsg = document.getElementById('successMsg');
-            const submitBtn = document.getElementById('submitBtn');
+  // CONTACT FORM VALIDATION - Formspree Friendly
+const form = document.getElementById('contactForm');
+const nameInput = document.getElementById('name');
+const emailInput = document.getElementById('email');
+const messageInput = document.getElementById('message');
 
-            form.addEventListener('submit', async function(e) {
-                e.preventDefault();
-                let valid = true;
-
-                if (nameInput.value.trim() === '') {
-                    nameError.style.display = 'block';
-                    valid = false;
-                } else {
-                    nameError.style.display = 'none';
-                }
-
-                const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-                if (!emailRegex.test(emailInput.value)) {
-                    emailError.style.display = 'block';
-                    valid = false;
-                } else {
-                    emailError.style.display = 'none';
-                }
-
-                if (msgInput.value.trim().length < 10) {
-                    msgError.style.display = 'block';
-                    valid = false;
-                } else {
-                    msgError.style.display = 'none';
-                }
-
-                if (valid) {
-                    submitBtn.disabled = true;
-                    submitBtn.innerText = 'Sending...';
-                    
-                    setTimeout(function() {
-                        successMsg.style.display = 'block';
-                        form.reset();
-                        submitBtn.disabled = false;
-                        submitBtn.innerText = 'Send Message';
-                        setTimeout(function() {
-                            successMsg.style.display = 'none';
-                        }, 3000);
-                    }, 1000);
-                }
-            });
-        } catch(e) { 
-            console.log('Form error:', e); 
-        }
-    </script>
+form.addEventListener('submit', function(e) {
+    let isValid = true;
+    
+    // Clear old errors
+    document.querySelectorAll('.error').forEach(error => {
+        error.style.display = 'none';
+    });
+    
+    // Check name
+    if (nameInput.value.trim() === '') {
+        document.getElementById('nameError').style.display = 'block';
+        isValid = false;
+    }
+    
+    // Check email
+    if (emailInput.value.trim() === '' || !emailInput.value.includes('@')) {
+        document.getElementById('emailError').style.display = 'block';
+        isValid = false;
+    }
+    
+    // Check message
+    if (messageInput.value.trim() === '') {
+        document.getElementById('messageError').style.display = 'block';
+        isValid = false;
+    }
+    
+    // Only stop submission if there are errors
+    if (!isValid) {
+        e.preventDefault();
+    }
+    // If valid, form submits to Formspree automatically
+});
+</script>
 </body>
-</html>
+</html> 
