@@ -228,7 +228,7 @@
                 <div class="error" id="msgError">Message must be at least 10 characters</div>
             </div>
             <button type="submit" id="submitBtn">Send Message</button>
-            <div class="success" id="successMsg">Message sent! Backend coming in Part 2 💙</div>
+            <div class="success" id="successMsg">Message sent! Backend coming next 💙</div>
         </form>
     </div>
 
@@ -237,7 +237,7 @@
     </footer>
 
     <script>
-        // 1. TYPING ANIMATION - New Day 9 Feature
+        // 1. TYPING ANIMATION
         const text = "Hi! I'm Sylvie from Kigali";
         const typedText = document.getElementById('typed-text');
         let i = 0;
@@ -261,7 +261,7 @@
                 themeBtn.innerText = '☀️';
             }
 
-            themeBtn.addEventListener('click', () => {
+            themeBtn.addEventListener('click', function() {
                 body.classList.toggle('dark');
                 if (body.classList.contains('dark')) {
                     localStorage.setItem('theme', 'dark');
@@ -271,7 +271,9 @@
                     themeBtn.innerText = '🌙';
                 }
             });
-        } catch(e) { console.log('Theme error:', e); }
+        } catch(e) { 
+            console.log('Theme error:', e); 
+        }
 
         // 3. CLICK COUNTER
         try {
@@ -279,7 +281,9 @@
                 let savedCount = localStorage.getItem('day' + i) || 0;
                 document.getElementById('count-' + i).innerText = 'Clicked ' + savedCount + ' times';
             }
-        } catch(e) { console.log('Counter error:', e); }
+        } catch(e) { 
+            console.log('Counter error:', e); 
+        }
 
         function openDay(dayNumber) {
             try {
@@ -296,32 +300,16 @@
             }
         }
 
-        // 4. BULLETPROOF LIVE STATS - Day 9 Fix
-        async function loadGitHubStats() {
-            const username = 'ingabirelvie';
-            const repo = 'Sylvie-INGABIRE';
-            
-            for (let i = 1; i <= 5; i++) {
-                const elem = document.getElementById('updated-' + i);
-                try {
-                    const res = await fetch(https://api.github.com/repos/${username}/${repo}/commits?path=day${i}.html&page=1&per_page=1);
-                    if (!res.ok) throw new Error('API fail');
-                    const data = await res.json();
-                    if (data[0]) {
-                        const date = new Date(data[0].commit.committer.date);
-                        const diff = Math.floor((new Date() - date) / (1000 * 60 * 60));
-                        elem.innerText = diff < 24 ? Updated ${diff}h ago : Updated ${Math.floor(diff/24)}d ago;
-                    } else {
-                        elem.innerText = 'Day 9';
-                    }
-                } catch (e) {
-                    elem.innerText = 'Day 9'; // Never shows "Loading..." forever
-                }
-            }
-        }
-        loadGitHubStats();
-
-        // 5. CONTACT FORM - Frontend ready, Backend comes in Part 3
+        // 4. LIVE STATS - DISABLED FOR NOW
+function loadGitHubStats() {
+    // We removed this to stop the bugs
+    // We'll add it back Day 12 when you're ready for APIs
+    for (let i = 1; i <= 5; i++) {
+        document.getElementById('updated-' + i).innerText = 'Day 9';
+    }
+}
+loadGitHubStats();
+        // 5. CONTACT FORM
         try {
             const form = document.getElementById('contactForm');
             const nameInput = document.getElementById('name');
@@ -363,19 +351,20 @@
                     submitBtn.disabled = true;
                     submitBtn.innerText = 'Sending...';
                     
-                    // TODO: In Part 3 we replace this with real Hostinger fetch()
-                    setTimeout(() => {
+                    setTimeout(function() {
                         successMsg.style.display = 'block';
                         form.reset();
                         submitBtn.disabled = false;
                         submitBtn.innerText = 'Send Message';
-                        setTimeout(() => {
+                        setTimeout(function() {
                             successMsg.style.display = 'none';
                         }, 3000);
                     }, 1000);
                 }
             });
-        } catch(e) { console.log('Form error:', e); }
+        } catch(e) { 
+            console.log('Form error:', e); 
+        }
     </script>
 </body>
 </html>
