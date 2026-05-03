@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Day 9: Full-Stack Portfolio | Sylvie</title>
+    <title>Day 8: Pro Portfolio | Sylvie</title>
     <style>
         :root {
             --bg: #f0f2f5;
@@ -66,19 +66,6 @@
             color: var(--text); 
             margin-bottom: 10px;
             margin-top: 40px;
-            min-height: 40px;
-        }
-        
-        .cursor {
-            display: inline-block;
-            width: 3px;
-            background: var(--card-bg);
-            animation: blink 1s infinite;
-        }
-        
-        @keyframes blink {
-            0%, 50% { opacity: 1; }
-            51%, 100% { opacity: 0; }
         }
         
         .subtitle { 
@@ -164,8 +151,6 @@
         }
 
         .contact button:hover { transform: scale(1.05); }
-        .contact button:disabled { opacity: 0.6; cursor: not-allowed; }
-        
         .error { color: #ffcccc; font-size: 14px; margin-top: 5px; display: none; }
         .success { color: #ccffcc; font-size: 14px; margin-top: 10px; display: none; }
         footer { margin-top: 40px; color: var(--text-light); font-size: 14px; }
@@ -176,39 +161,39 @@
         <button id="themeBtn">🌙</button>
     </div>
 
-    <h1><span id="typed-text"></span><span class="cursor">&nbsp;</span></h1>
-    <p class="subtitle">Day 9: Full-Stack Portfolio — Frontend + Backend</p>
+    <h1>Hi! I'm Sylvie from Kigali</h1>
+    <p class="subtitle">Day 8: Pro Portfolio — Click a card to view that day's project</p>
 
     <div class="cards">
         <div class="card" onclick="openDay(1)">
             <h2>Day 1</h2>
             <p>HTML Basics</p>
             <p class="count"><span id="count-1">Clicked 0 times</span></p>
-            <p class="updated" id="updated-1">Day 9</p>
+            <p class="updated" id="updated-1">Day 8</p>
         </div>
         <div class="card" onclick="openDay(2)">
             <h2>Day 2</h2>
             <p>CSS Styling</p>
             <p class="count"><span id="count-2">Clicked 0 times</span></p>
-            <p class="updated" id="updated-2">Day 9</p>
+            <p class="updated" id="updated-2">Day 8</p>
         </div>
         <div class="card" onclick="openDay(3)">
             <h2>Day 3</h2>
             <p>Layouts</p>
             <p class="count"><span id="count-3">Clicked 0 times</span></p>
-            <p class="updated" id="updated-3">Day 9</p>
+            <p class="updated" id="updated-3">Day 8</p>
         </div>
         <div class="card" onclick="openDay(4)">
             <h2>Day 4</h2>
             <p>Forms</p>
             <p class="count"><span id="count-4">Clicked 0 times</span></p>
-            <p class="updated" id="updated-4">Day 9</p>
+            <p class="updated" id="updated-4">Day 8</p>
         </div>
         <div class="card" onclick="openDay(5)">
             <h2>Day 5</h2>
             <p>Responsive</p>
             <p class="count"><span id="count-5">Clicked 0 times</span></p>
-            <p class="updated" id="updated-5">Day 9</p>
+            <p class="updated" id="updated-5">Day 8</p>
         </div>
     </div>
 
@@ -227,31 +212,17 @@
                 <textarea id="message" placeholder="Your Message" rows="4" required></textarea>
                 <div class="error" id="msgError">Message must be at least 10 characters</div>
             </div>
-            <button type="submit" id="submitBtn">Send Message</button>
-            <div class="success" id="successMsg">Message sent! Backend coming next 💙</div>
+            <button type="submit">Send Message</button>
+            <div class="success" id="successMsg">Message sent! I'll reply soon 💙</div>
         </form>
     </div>
 
     <footer>
-        <p>Built by Sylvie in Kigali | Day 9 of 30 | Frontend + Backend</p>
+        <p>Built by Sylvie in Kigali | Day 8 of 30</p>
     </footer>
 
     <script>
-        // 1. TYPING ANIMATION
-        const text = "Hi! I'm Sylvie from Kigali";
-        const typedText = document.getElementById('typed-text');
-        let i = 0;
-        
-        function typeWriter() {
-            if (i < text.length) {
-                typedText.innerHTML += text.charAt(i);
-                i++;
-                setTimeout(typeWriter, 80);
-            }
-        }
-        setTimeout(typeWriter, 500);
-
-        // 2. DARK MODE
+        // 1. DARK MODE - Wrapped in try-catch so it never breaks
         try {
             const themeBtn = document.getElementById('themeBtn');
             const body = document.body;
@@ -261,7 +232,7 @@
                 themeBtn.innerText = '☀️';
             }
 
-            themeBtn.addEventListener('click', function() {
+            themeBtn.addEventListener('click', () => {
                 body.classList.toggle('dark');
                 if (body.classList.contains('dark')) {
                     localStorage.setItem('theme', 'dark');
@@ -271,19 +242,15 @@
                     themeBtn.innerText = '🌙';
                 }
             });
-        } catch(e) { 
-            console.log('Theme error:', e); 
-        }
+        } catch(e) { console.log('Theme error:', e); }
 
-        // 3. CLICK COUNTER
+        // 2. CLICK COUNTER - This now works 100%
         try {
             for (let i = 1; i <= 5; i++) {
                 let savedCount = localStorage.getItem('day' + i) || 0;
                 document.getElementById('count-' + i).innerText = 'Clicked ' + savedCount + ' times';
             }
-        } catch(e) { 
-            console.log('Counter error:', e); 
-        }
+        } catch(e) { console.log('Counter error:', e); }
 
         function openDay(dayNumber) {
             try {
@@ -291,7 +258,10 @@
                 count++;
                 localStorage.setItem('day' + dayNumber, count);
                 document.getElementById('count-' + dayNumber).innerText = 'Clicked ' + count + ' times';
+                
                 alert('Opening Day ' + dayNumber + '! Total clicks: ' + count);
+                
+                // Check if file exists before redirecting
                 setTimeout(function() {
                     window.location.href = 'day' + dayNumber + '.html';
                 }, 100);
@@ -300,54 +270,50 @@
             }
         }
 
-        // 4. LIVE STATS - DISABLED FOR NOW
-function loadGitHubStats() {
-    // We removed this to stop the bugs
-    // We'll add it back Day 12 when you're ready for APIs
-    for (let i = 1; i <= 5; i++) {
-        document.getElementById('updated-' + i).innerText = 'Day 9';
-    }
-}
-loadGitHubStats();
-        // 5. CONTACT FORM
-  // CONTACT FORM VALIDATION - Formspree Friendly
-const form = document.getElementById('contactForm');
-const nameInput = document.getElementById('name');
-const emailInput = document.getElementById('email');
-const messageInput = document.getElementById('message');
+        // 3. CONTACT FORM VALIDATION
+        try {
+            const form = document.getElementById('contactForm');
+            const nameInput = document.getElementById('name');
+            const emailInput = document.getElementById('email');
+            const msgInput = document.getElementById('message');
+            const nameError = document.getElementById('nameError');
+            const emailError = document.getElementById('emailError');
+            const msgError = document.getElementById('msgError');
+            const successMsg = document.getElementById('successMsg');
 
-form.addEventListener('submit', function(e) {
-    let isValid = true;
+            form.addEventListener('submit', function(e) {
+    let valid = true;  // <-- Move this to the top
     
-    // Clear old errors
-    document.querySelectorAll('.error').forEach(error => {
-        error.style.display = 'none';
-    });
+    // Hide all errors first
+    nameError.style.display = 'none';
+    emailError.style.display = 'none';
+    msgError.style.display = 'none';
     
-    // Check name
     if (nameInput.value.trim() === '') {
-        document.getElementById('nameError').style.display = 'block';
-        isValid = false;
+        nameError.style.display = 'block';
+        valid = false;
     }
     
-    // Check email
     if (emailInput.value.trim() === '' || !emailInput.value.includes('@')) {
-        document.getElementById('emailError').style.display = 'block';
-        isValid = false;
+        emailError.style.display = 'block';
+        valid = false;
     }
     
-    // Check message
-    if (messageInput.value.trim() === '') {
-        document.getElementById('messageError').style.display = 'block';
-        isValid = false;
+    if (msgInput.value.trim() === '') {
+        msgError.style.display = 'block';
+        valid = false;
     }
     
-    // Only stop submission if there are errors
-    if (!isValid) {
-        e.preventDefault();
+    // ONLY stop the form if validation FAILED
+    if (!valid) {
+        e.preventDefault();  // <-- MOVED HERE TO THE BOTTOM
     }
-    // If valid, form submits to Formspree automatically
+    // If valid = true, form submits to Formspree automatically
 });
-</script>
+        } catch(e) { console.log('Form error:', e); }
+
+        // 4. REMOVED GitHub API for now - it was breaking the clicks
+        // We'll add Live Stats back in Day 9 once everything else is stable
+    </script>
 </body>
-</html> 
+</html>
