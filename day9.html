@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Day 8: Pro Portfolio | Sylvie</title>
+    <title>Day 9: Full-Stack Portfolio | Sylvie</title>
     <style>
         :root {
             --bg: #f0f2f5;
@@ -162,54 +162,54 @@
     </div>
 
     <h1>Hi! I'm Sylvie from Kigali</h1>
-    <p class="subtitle">Day 8: Pro Portfolio — Click a card to view that day's project</p>
+    <p class="subtitle">Day 9: Full-Stack Portfolio — Now with working backend!</p>
 
     <div class="cards">
         <div class="card" onclick="openDay(1)">
             <h2>Day 1</h2>
             <p>HTML Basics</p>
             <p class="count"><span id="count-1">Clicked 0 times</span></p>
-            <p class="updated" id="updated-1">Day 8</p>
+            <p class="updated" id="updated-1">Day 9</p>
         </div>
         <div class="card" onclick="openDay(2)">
             <h2>Day 2</h2>
             <p>CSS Styling</p>
             <p class="count"><span id="count-2">Clicked 0 times</span></p>
-            <p class="updated" id="updated-2">Day 8</p>
+            <p class="updated" id="updated-2">Day 9</p>
         </div>
         <div class="card" onclick="openDay(3)">
             <h2>Day 3</h2>
             <p>Layouts</p>
             <p class="count"><span id="count-3">Clicked 0 times</span></p>
-            <p class="updated" id="updated-3">Day 8</p>
+            <p class="updated" id="updated-3">Day 9</p>
         </div>
         <div class="card" onclick="openDay(4)">
             <h2>Day 4</h2>
             <p>Forms</p>
             <p class="count"><span id="count-4">Clicked 0 times</span></p>
-            <p class="updated" id="updated-4">Day 8</p>
+            <p class="updated" id="updated-4">Day 9</p>
         </div>
         <div class="card" onclick="openDay(5)">
             <h2>Day 5</h2>
             <p>Responsive</p>
             <p class="count"><span id="count-5">Clicked 0 times</span></p>
-            <p class="updated" id="updated-5">Day 8</p>
+            <p class="updated" id="updated-5">Day 9</p>
         </div>
     </div>
 
     <div class="contact">
         <h2>Contact Me</h2>
-        <form id="contactForm">
+        <form id="contactForm" action="https://formspree.io/f/xwvypgwr" method="POST">
             <div class="form-group">
-                <input type="text" id="name" placeholder="Your Name" required>
+                <input type="text" id="name" name="name" placeholder="Your Name" required>
                 <div class="error" id="nameError">Please enter your name</div>
             </div>
             <div class="form-group">
-                <input type="email" id="email" placeholder="Your Email" required>
+                <input type="email" id="email" name="email" placeholder="Your Email" required>
                 <div class="error" id="emailError">Please enter a valid email</div>
             </div>
             <div class="form-group">
-                <textarea id="message" placeholder="Your Message" rows="4" required></textarea>
+                <textarea id="message" name="message" placeholder="Your Message" rows="4" required></textarea>
                 <div class="error" id="msgError">Message must be at least 10 characters</div>
             </div>
             <button type="submit">Send Message</button>
@@ -218,11 +218,11 @@
     </div>
 
     <footer>
-        <p>Built by Sylvie in Kigali | Day 8 of 30</p>
+        <p>Built by Sylvie in Kigali | Day 9 of 30 — Full-Stack Complete!</p>
     </footer>
 
     <script>
-        // 1. DARK MODE - Wrapped in try-catch so it never breaks
+        // 1. DARK MODE
         try {
             const themeBtn = document.getElementById('themeBtn');
             const body = document.body;
@@ -244,7 +244,7 @@
             });
         } catch(e) { console.log('Theme error:', e); }
 
-        // 2. CLICK COUNTER - This now works 100%
+        // 2. CLICK COUNTER
         try {
             for (let i = 1; i <= 5; i++) {
                 let savedCount = localStorage.getItem('day' + i) || 0;
@@ -258,10 +258,6 @@
                 count++;
                 localStorage.setItem('day' + dayNumber, count);
                 document.getElementById('count-' + dayNumber).innerText = 'Clicked ' + count + ' times';
-                
-                alert('Opening Day ' + dayNumber + '! Total clicks: ' + count);
-                
-                // Check if file exists before redirecting
                 setTimeout(function() {
                     window.location.href = 'day' + dayNumber + '.html';
                 }, 100);
@@ -270,7 +266,7 @@
             }
         }
 
-        // 3. CONTACT FORM VALIDATION
+        // 3. CONTACT FORM VALIDATION - FIXED FOR FORMSPREE
         try {
             const form = document.getElementById('contactForm');
             const nameInput = document.getElementById('name');
@@ -279,41 +275,34 @@
             const nameError = document.getElementById('nameError');
             const emailError = document.getElementById('emailError');
             const msgError = document.getElementById('msgError');
-            const successMsg = document.getElementById('successMsg');
 
             form.addEventListener('submit', function(e) {
-    let valid = true;  // <-- Move this to the top
-    
-    // Hide all errors first
-    nameError.style.display = 'none';
-    emailError.style.display = 'none';
-    msgError.style.display = 'none';
-    
-    if (nameInput.value.trim() === '') {
-        nameError.style.display = 'block';
-        valid = false;
-    }
-    
-    if (emailInput.value.trim() === '' || !emailInput.value.includes('@')) {
-        emailError.style.display = 'block';
-        valid = false;
-    }
-    
-    if (msgInput.value.trim() === '') {
-        msgError.style.display = 'block';
-        valid = false;
-    }
-    
-    // ONLY stop the form if validation FAILED
-    if (!valid) {
-        e.preventDefault();  // <-- MOVED HERE TO THE BOTTOM
-    }
-    // If valid = true, form submits to Formspree automatically
-});
+                let valid = true;
+                
+                nameError.style.display = 'none';
+                emailError.style.display = 'none';
+                msgError.style.display = 'none';
+                
+                if (nameInput.value.trim() === '') {
+                    nameError.style.display = 'block';
+                    valid = false;
+                }
+                
+                if (emailInput.value.trim() === '' || !emailInput.value.includes('@')) {
+                    emailError.style.display = 'block';
+                    valid = false;
+                }
+                
+                if (msgInput.value.trim().length < 10) {
+                    msgError.style.display = 'block';
+                    valid = false;
+                }
+                
+                if (!valid) {
+                    e.preventDefault();
+                }
+            });
         } catch(e) { console.log('Form error:', e); }
-
-        // 4. REMOVED GitHub API for now - it was breaking the clicks
-        // We'll add Live Stats back in Day 9 once everything else is stable
     </script>
 </body>
 </html>
