@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Message Sent | Sylvie</title>
+    <style>
+        body { 
+            font-family: Arial; 
+            background: #f0f2f5; 
+            color: #2c3e50;
+            display: flex; 
+            align-items: center; 
+            justify-content: center; 
+            height: 100vh; 
+            text-align: center;
+        }
+        .box { 
+            background: #3498db; 
+            color: white; 
+            padding: 40px; 
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+        a { color: white; text-decoration: underline; }
+    </style>
+</head>
+<body>
+    <div class="box">
+        <h1>Thanks, I'll reply soon! 💙</h1>
+        <p>Redirecting back to portfolio in 3 seconds...</p>
+        <p><a href="index.html">Click here if not redirected</a></p>
+    </div>
+    <script>
+        setTimeout(() => {
+            window.location.href = 'index.html';
+        }, 3000);
+    </script>
+</body>
+</html>
