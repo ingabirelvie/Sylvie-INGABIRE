@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Day 12: 3D Carousel Portfolio | Sylvie's 30 Days</title>
+<title>Day 11: 3D Flip Cards | Sylvie's 30 Days</title>
 <style>
     :root {
         --navy: #1a3355;
@@ -14,34 +14,24 @@
         --off-white: #f7faf5;
         --text: #1c2b1e;
         --text-light: #5a6b5c;
-        --border: #d4e6ce;
-        --card-bg: linear-gradient(135deg, var(--navy), var(--blue-mid));
     }
-
     * { margin: 0; padding: 0; box-sizing: border-box; }
-
+    
     body {
         font-family: 'Segoe UI', sans-serif;
         background: var(--off-white);
         color: var(--text);
-        overflow-x: hidden;
+        min-height: 100vh;
     }
 
-    /* ─── HEADER ─── */
     header {
         text-align: center;
-        padding: 50px 20px 20px;
+        padding: 50px 20px 30px;
         background: var(--navy);
         color: white;
     }
-    header h1 {
-        font-size: 2.5rem;
-        margin-bottom: 8px;
-    }
-    header p {
-        opacity: 0.8;
-        font-size: 1.1rem;
-    }
+    header h1 { font-size: 2.5rem; margin-bottom: 8px; }
+    header p { opacity: 0.8; font-size: 1.1rem; }
     .day-badge {
         display: inline-block;
         background: var(--green);
@@ -52,275 +42,152 @@
         font-weight: 600;
     }
 
-    /* ─── 3D CAROUSEL SECTION ─── */
-    .carousel-section {
+    .container {
+        max-width: 1200px;
+        margin: 0 auto;
         padding: 60px 20px;
-        text-align: center;
     }
-    .carousel-section h2 {
+
+    .section-title {
+        text-align: center;
         font-size: 2rem;
         color: var(--navy);
-        margin-bottom: 10px;
+        margin-bottom: 15px;
+    }
+    .section-subtitle {
+        text-align: center;
+        color: var(--text-light);
+        margin-bottom: 50px;
+        font-size: 1rem;
     }
 
-    .carousel-container {
-        position: relative;
+    /* ─── 3D FLIP CARDS ─── */
+    .cards-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+        gap: 30px;
+        perspective: 1000px; /* This gives depth for 3D */
+    }
+
+    .flip-card {
+        background-color: transparent;
         width: 100%;
-        max-width: 900px;
-        margin: 40px auto;
-        height: 420px;
-        perspective: 1300px;
-    }
-
-    .carousel {
-        width: 100%;
-        height: 100%;
-        position: relative;
-        transform-style: preserve-3d;
-        transition: transform 0.8s cubic-bezier(0.68, -0.55, 0.265, 1.55);
-    }
-
-    .carousel-card {
-        position: absolute;
-        width: 240px;
-        height: 300px;
-        left: 50%;
-        top: 50%;
-        margin-left: -120px;
-        margin-top: -150px;
-        transform-style: preserve-3d;
+        height: 320px;
         cursor: pointer;
-        transition: transform 0.6s;
     }
 
-    .carousel-card-inner {
+    .flip-card-inner {
         position: relative;
         width: 100%;
         height: 100%;
-        transform-style: preserve-3d;
-        transition: transform 0.6s;
+        text-align: center;
+        transition: transform 0.7s;
+        transform-style: preserve-3d; /* KEY: keeps children in 3D space */
     }
 
-    .carousel-card.flipped .carousel-card-inner {
+    /* Flip when hovering OR when .flipped class added by JS */
+    .flip-card:hover .flip-card-inner,
+    .flip-card.flipped .flip-card-inner {
         transform: rotateY(180deg);
     }
 
-    .carousel-card-front, .carousel-card-back {
+    .flip-card-front, .flip-card-back {
         position: absolute;
         width: 100%;
         height: 100%;
-        backface-visibility: hidden;
-        background: var(--card-bg);
+        backface-visibility: hidden; /* KEY: hides the back */
         border-radius: 15px;
-        padding: 25px 20px;
-        color: white;
+        box-shadow: 0 10px 30px rgba(26,51,85,0.15);
         display: flex;
         flex-direction: column;
         justify-content: center;
         align-items: center;
-        box-shadow: 0 15px 35px rgba(26,51,85,0.3);
+        padding: 30px 20px;
     }
 
-    .carousel-card-back {
-        transform: rotateY(180deg);
-        background: linear-gradient(135deg, var(--green), var(--blue-mid));
+    .flip-card-front {
+        background: linear-gradient(135deg, var(--navy), var(--blue-mid));
+        color: white;
     }
 
-    .carousel-card-front h3 {
-        font-size: 1.8rem;
-        margin-bottom: 8px;
-    }
-    .carousel-card-front p {
-        font-size: 1rem;
-        opacity: 0.9;
-        margin-bottom: 15px;
-    }
-    .carousel-card-front small {
-        opacity: 0.7;
-        font-size: 0.8rem;
+    .flip-card-back {
+        background: linear-gradient(135deg, var(--green), var(--green-light));
+        color: white;
+        transform: rotateY(180deg); /* KEY: back starts flipped */
     }
 
-    .carousel-card-back h3 {
-        font-size: 1.4rem;
-        margin-bottom: 12px;
-    }
-    .carousel-card-back p {
-        font-size: 0.9rem;
-        line-height: 1.5;
-        margin-bottom: 15px;
-        opacity: 0.9;
-    }
-    .carousel-card-back button {
-        background: white;
-        color: var(--green);
-        border: none;
-        padding: 8px 16px;
-        border-radius: 6px;
+    .card-day {
+        font-size: 3rem;
         font-weight: bold;
-        cursor: pointer;
-        transition: transform 0.2s;
-    }
-    .carousel-card-back button:hover {
-        transform: scale(1.05);
-    }
-
-    .carousel-btn {
+        margin-bottom: 10px;
+        opacity: 0.3;
         position: absolute;
-        top: 50%;
-        transform: translateY(-50%);
-        background: var(--green);
-        color: white;
-        border: none;
-        width: 55px;
-        height: 55px;
-        border-radius: 50%;
-        font-size: 2rem;
-        cursor: pointer;
-        z-index: 10;
-        transition: all 0.2s;
-        box-shadow: 0 4px 15px rgba(74,140,63,0.4);
-    }
-    .carousel-btn:hover {
-        background: var(--navy);
-        transform: translateY(-50%) scale(1.1);
-    }
-    .carousel-btn.prev { left: -10px; }
-    .carousel-btn.next { right: -10px; }
-
-    .carousel-hint {
-        color: var(--text-light);
-        font-size: 0.9rem;
-        margin-top: 20px;
+        top: 15px;
+        right: 20px;
     }
 
-    /* ─── MODAL POP-UP ─── */
-    .modal-overlay {
-        position: fixed;
-        top: 0; left: 0;
-        width: 100%; height: 100%;
-        background: rgba(0,0,0,0.75);
-        backdrop-filter: blur(6px);
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        z-index: 1000;
-        opacity: 0;
-        pointer-events: none;
-        transition: opacity 0.3s ease;
+    .card-title {
+        font-size: 1.5rem;
+        font-weight: 700;
+        margin-bottom: 15px;
     }
 
-    .modal-overlay.active {
-        opacity: 1;
-        pointer-events: all;
-    }
-
-    .modal-card {
-        background: var(--card-bg);
-        color: white;
-        border-radius: 20px;
-        padding: 35px;
-        width: 90%;
-        max-width: 520px;
-        transform: scale(0.7) rotateX(-25deg);
-        transition: transform 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
-        position: relative;
-    }
-
-    .modal-overlay.active .modal-card {
-        transform: scale(1) rotateX(0deg);
-    }
-
-    .modal-close {
-        position: absolute;
-        top: 15px; right: 15px;
-        background: rgba(255,255,255,0.2);
-        border: none;
-        color: white;
-        width: 32px; height: 32px;
-        border-radius: 50%;
-        font-size: 1.3rem;
-        cursor: pointer;
-        transition: background 0.2s;
-    }
-    .modal-close:hover { background: rgba(255,255,255,0.3); }
-
-    .modal-content h2 {
-        font-size: 2rem;
-        margin-bottom: 12px;
-    }
-    .modal-content p {
-        font-size: 1rem;
+    .card-desc {
+        font-size: 0.95rem;
         line-height: 1.6;
         opacity: 0.9;
         margin-bottom: 20px;
     }
 
-    .modal-tags {
+    .card-stats {
         display: flex;
-        gap: 8px;
-        margin: 18px 0;
-        flex-wrap: wrap;
+        gap: 15px;
+        margin-top: auto;
     }
 
-    .tag {
-        background: rgba(255,255,255,0.2);
-        padding: 5px 14px;
-        border-radius: 20px;
-        font-size: 0.85rem;
-    }
-
-    .modal-stats {
-        display: flex;
-        gap: 20px;
-        margin: 20px 0;
-        padding: 15px;
-        background: rgba(255,255,255,0.1);
-        border-radius: 10px;
-    }
     .stat {
-        text-align: center;
-        flex: 1;
+        background: rgba(255,255,255,0.2);
+        padding: 8px 14px;
+        border-radius: 20px;
+        font-size: 0.8rem;
+        font-weight: 600;
     }
-    .stat-num {
-        font-size: 1.8rem;
-        font-weight: bold;
-        display: block;
-    }
-    .stat-label {
+
+    .click-counter {
+        position: absolute;
+        bottom: 15px;
+        left: 20px;
+        background: rgba(255,255,255,0.25);
+        padding: 6px 12px;
+        border-radius: 20px;
         font-size: 0.75rem;
-        opacity: 0.8;
-        text-transform: uppercase;
+        font-weight: 600;
     }
 
-    .modal-btn {
-        display: inline-block;
-        background: white;
-        color: var(--navy);
-        padding: 12px 24px;
-        border-radius: 8px;
-        text-decoration: none;
-        font-weight: bold;
-        margin-top: 10px;
-        transition: transform 0.2s;
+    .flip-hint {
+        text-align: center;
+        margin-top: 40px;
+        color: var(--text-light);
+        font-size: 0.9rem;
     }
-    .modal-btn:hover { transform: scale(1.05); }
 
-    /* ─── FOOTER ─── */
     footer {
         text-align: center;
         padding: 30px 20px;
         background: var(--navy);
         color: rgba(255,255,255,0.7);
         font-size: 0.9rem;
+        margin-top: 60px;
     }
 
-    /* ─── RESPONSIVE ─── */
+    /* Mobile: tap to flip instead of hover */
     @media (max-width: 768px) {
-        .carousel-card { width: 200px; height: 260px; margin-left: -100px; margin-top: -130px; }
-        .carousel-btn { width: 45px; height: 45px; font-size: 1.6rem; }
-        .carousel-btn.prev { left: 5px; }
-        .carousel-btn.next { right: 5px; }
-        header h1 { font-size: 2rem; }
+        .flip-card:hover .flip-card-inner {
+            transform: none; /* Disable hover on mobile */
+        }
+        .cards-grid {
+            grid-template-columns: 1fr;
+        }
     }
 </style>
 </head>
@@ -329,138 +196,122 @@
 <header>
     <h1>Sylvie's 30-Day Code Journey</h1>
     <p>Building in public, one day at a time</p>
-    <div class="day-badge">DAY 12: 3D CAROUSEL + MODALS</div>
+    <div class="day-badge">DAY 11: 3D FLIP CARDS</div>
 </header>
 
-<section class="carousel-section">
-    <h2>My 6-Day Journey</h2>
-    <p style="color: var(--text-light); margin-bottom: 10px;">Click arrows to rotate • Click a card to flip it • Click "View Details" for 3D pop-up</p>
+<div class="container">
+    <h2 class="section-title">My First 6 Projects</h2>
+    <p class="section-subtitle">Hover on desktop or tap on mobile to flip • Click cards to count views</p>
     
-    <div class="carousel-container">
-        <button class="carousel-btn prev" onclick="rotateCarousel(-1)">‹</button>
-        <div class="carousel" id="carousel"></div>
-        <button class="carousel-btn next" onclick="rotateCarousel(1)">›</button>
+    <div class="cards-grid" id="cardsGrid">
+        <!-- Cards generated by JavaScript -->
     </div>
     
-    <p class="carousel-hint">Day 11 skills: 3D transforms • Day 12 skills: Circular math + Modals</p>
-</section>
-
-<!-- 3D Project Modal -->
-<div id="projectModal" class="modal-overlay">
-    <div class="modal-card">
-        <button class="modal-close" onclick="closeModal()">×</button>
-        <div class="modal-content">
-            <h2 id="modalTitle">Day 1</h2>
-            <p id="modalDesc">Built my first HTML page!</p>
-            <div class="modal-tags" id="modalTags"></div>
-            <div class="modal-stats">
-                <div class="stat">
-                    <span class="stat-num" id="modalClicks">0</span>
-                    <span class="stat-label">Your Clicks</span>
-                </div>
-                <div class="stat">
-                    <span class="stat-num" id="modalDay">1</span>
-                    <span class="stat-label">Day #</span>
-                </div>
-            </div>
-            <a id="modalLink" href="#" target="_blank" class="modal-btn">View Live Project →</a>
-        </div>
-    </div>
+    <p class="flip-hint">💡 Day 10 skill: localStorage saves your click counts forever!</p>
 </div>
 
 <footer>
-    <p>© 2026 Sylvie • Day 12 of 30 • Built with HTML, CSS & JavaScript</p>
-    <p style="margin-top: 8px; font-size: 0.8rem;">Next: Day 13 - API Weather App 🌦️</p>
+    <p>© 2026 Sylvie • Day 11 of 30 • Built with HTML, CSS 3D & JavaScript</p>
+    <p style="margin-top: 8px; font-size: 0.8rem;">Next: Day 12 - 3D Carousel with these same cards 🚀</p>
 </footer>
 
 <script>
-    const projectData = [
-        { day: 1, title: "HTML Basics", desc: "Built my first HTML page with headings, paragraphs, images, and links. Learned the skeleton of every website.", tags: ["HTML", "Structure"], link: "#" },
-        { day: 2, title: "CSS Styling", desc: "Added colors, fonts, spacing, and backgrounds. Made my ugly HTML beautiful with external stylesheets.", tags: ["CSS", "Design"], link: "#" },
-        { day: 3, title: "Flexbox Layout", desc: "Mastered display: flex to align items perfectly. Centered divs are no longer a mystery!", tags: ["CSS", "Flexbox"], link: "#" },
-        { day: 4, title: "JavaScript Intro", desc: "Made my site interactive with buttons, alerts, and DOM manipulation. Code came alive!", tags: ["JS", "DOM"], link: "#" },
-        { day: 5, title: "Dark Mode Toggle", desc: "Built a light/dark theme switcher using localStorage. My site remembers user preferences.", tags: ["JS", "CSS", "UX"], link: "#" },
-        { day: 6, title: "Click Speed Game", desc: "Created a 5-second click challenge with timers, high scores, and localStorage. Addictive!", tags: ["JS", "Game", "API"], link: "#" }
+    // Project data from Day 1-6 - same as Day 10
+    const projects = [
+        { 
+            day: 1, 
+            title: "HTML Basics", 
+            desc: "Built my first HTML page with headings, paragraphs, images, and links. Learned the skeleton of every website.",
+            skills: ["HTML", "Structure"],
+            link: "#"
+        },
+        { 
+            day: 2, 
+            title: "CSS Styling", 
+            desc: "Added colors, fonts, spacing, and backgrounds. Made my ugly HTML beautiful with external stylesheets.",
+            skills: ["CSS", "Design"],
+            link: "#"
+        },
+        { 
+            day: 3, 
+            title: "Flexbox Layout", 
+            desc: "Mastered display: flex to align items perfectly. Centered divs are no longer a mystery!",
+            skills: ["CSS", "Flexbox"],
+            link: "#"
+        },
+        { 
+            day: 4, 
+            title: "JavaScript Intro", 
+            desc: "Made my site interactive with buttons, alerts, and DOM manipulation. Code came alive!",
+            skills: ["JS", "DOM"],
+            link: "#"
+        },
+        { 
+            day: 5, 
+            title: "Dark Mode Toggle", 
+            desc: "Built a light/dark theme switcher using localStorage. My site remembers user preferences.",
+            skills: ["JS", "CSS", "UX"],
+            link: "#"
+        },
+        { 
+            day: 6, 
+            title: "Click Speed Game", 
+            desc: "Created a 5-second click challenge with timers, high scores, and localStorage. Addictive!",
+            skills: ["JS", "Game", "Storage"],
+            link: "#"
+        }
     ];
 
-    let currentAngle = 0;
-    const anglePerCard = 360 / projectData.length;
-
-    // Build carousel cards
-    function initCarousel() {
-        const carousel = document.getElementById('carousel');
+    // Build cards - Day 11
+    function createCards() {
+        const grid = document.getElementById('cardsGrid');
         
-        projectData.forEach((project, index) => {
-            const card = document.createElement('div');
-            card.className = 'carousel-card';
-            card.style.transform = 'rotateY(${index * anglePerCard}deg) translateZ(320px)';
+        projects.forEach(project => {
+            // Get click count from localStorage - Day 10 skill!
+            const clicks = localStorage.getItem('day' + project.day + 'Views') || 0;
             
+            const card = document.createElement('div');
+            card.className = 'flip-card';
             card.innerHTML = `
-                <div class="carousel-card-inner">
-                    <div class="carousel-card-front">
-                        <h3>Day ${project.day}</h3>
-                        <p>${project.title}</p>
-                        <small>Click to flip</small>
+                <div class="flip-card-inner">
+                    <div class="flip-card-front">
+                        <div class="card-day">${project.day}</div>
+                        <h3 class="card-title">${project.title}</h3>
+                        <p style="opacity: 0.8; font-size: 0.9rem;">Hover to see details</p>
+                        <div class="click-counter">👁️ ${clicks} views</div>
                     </div>
-                    <div class="carousel-card-back">
-                        <h3>Day ${project.day}</h3>
-                        <p>${project.desc.substring(0, 60)}...</p>
-                        <button onclick="event.stopPropagation(); openModal(${project.day})">View Details →</button>
+                    <div class="flip-card-back">
+                        <div class="card-day">${project.day}</div>
+                        <h3 class="card-title">${project.title}</h3>
+                        <p class="card-desc">${project.desc}</p>
+                        <div class="card-stats">
+                            ${project.skills.map(skill => <span class="stat">${skill}</span>).join('')}
+                        </div>
                     </div>
                 </div>
             `;
             
-            card.onclick = (e) => {
-                if (!e.target.closest('button')) {
+            // Click to count views - Day 10 skill!
+            card.addEventListener('click', () => {
+                let count = parseInt(localStorage.getItem('day' + project.day + 'Views') || 0);
+                count++;
+                localStorage.setItem('day' + project.day + 'Views', count);
+                
+                // Update counter on card
+                card.querySelector('.click-counter').textContent = '👁️ ${count} views';
+                
+                // On mobile: toggle flip class instead of hover
+                if (window.innerWidth <= 768) {
                     card.classList.toggle('flipped');
                 }
-            };
-            carousel.appendChild(card);
+            });
+            
+            grid.appendChild(card);
         });
     }
 
-    function rotateCarousel(direction) {
-        currentAngle += anglePerCard * direction;
-        document.getElementById('carousel').style.transform = 'rotateY(${currentAngle}deg)';
-    }
-
-    // Modal functions
-    function openModal(day) {
-        const data = projectData[day - 1];
-        document.getElementById('modalTitle').textContent = data.title;
-        document.getElementById('modalDesc').textContent = data.desc;
-        document.getElementById('modalLink').href = data.link;
-        document.getElementById('modalDay').textContent = day;
-
-        // Update tags
-        const tagsContainer = document.getElementById('modalTags');
-        tagsContainer.innerHTML = data.tags.map(tag => <span class="tag">${tag}</span>).join('');
-
-        // Update click counter
-        let clicks = localStorage.getItem('day' + day + 'Clicks') || 0;
-        clicks++;
-        localStorage.setItem('day' + day + 'Clicks', clicks);
-        document.getElementById('modalClicks').textContent = clicks;
-
-        document.getElementById('projectModal').classList.add('active');
-    }
-
-    function closeModal() {
-        document.getElementById('projectModal').classList.remove('active');
-    }
-
-    // Close when clicking outside
-    document.getElementById('projectModal').addEventListener('click', function(e) {
-        if (e.target === this) closeModal();
-    });
-
-    // Close with Escape key
-    document.addEventListener('keydown', function(e) {
-        if (e.key === 'Escape') closeModal();
-    });
-
-    // Initialize on page load
-    initCarousel();
+    // Initialize
+    createCards();
 </script>
 
 </body>
